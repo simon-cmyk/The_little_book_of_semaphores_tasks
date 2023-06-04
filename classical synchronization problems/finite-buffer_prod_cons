@@ -1,0 +1,30 @@
+mutex = Semaphore(1)
+items = Semaphore(0)
+spaces = Semaphore(buffer.size())
+local event
+
+producer(){
+    while(1){
+        event = waitForEvent()
+
+        spaces.wait()
+        mutex.wait()
+            buffer.add(event)
+        mutex.signal()
+        items.signal()
+    }
+}
+
+consumer() {
+    while(1) {
+        items.wait()
+        mutex.wait()
+            event = buffer.get()
+        mutex.signal()
+        spaces.signal()
+
+        event.process()
+    }
+}
+// Best practice release mutex before signaling. 
+// Check availability before getting the mutex. 

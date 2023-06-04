@@ -1,0 +1,39 @@
+int8 readers = 0;
+mutex = Semaphore(1);
+emptyRoom = Semaphore(1)
+turnstile = Semaphore(1)
+
+readers() {
+
+    turnstile.wait()
+    turnstile.signal()
+
+    mutex.wait()
+    readers += 1
+    if(readers == 1) {
+        emptyRoom.wait()
+    }
+    mutex.signal()
+
+    // critical section
+
+    mutex.wait()
+    readers -= 1
+    if(readers == 0) {
+        emptyRoom.signal()
+    }
+    mutex.signal()
+}
+
+writers() {
+    turnstile.wait()
+    emptyRoom.wait()
+    write()
+    turnstile.signal()
+    emptyRoom.signal()
+}
+
+// Can also create noreader and nowriter semaphores and
+// guarantee that if there is writers the readers will starve
+// Often it might be better to just get obselete data sometimes
+// optimal assumptio

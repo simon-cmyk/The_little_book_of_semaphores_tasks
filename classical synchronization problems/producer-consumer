@@ -1,0 +1,53 @@
+// events
+/* 
+    1. while an item is being added/removed it is in 
+    inconsistent state. Threads exclusive access.
+    2. If consumer arrives when buffer is empty, it will block'
+*/
+
+mutex = Semaphore(1)
+items = Semaphore(0)
+local event
+
+producer() {
+    while(1){
+        event = waitForEvent()
+        mutex.wait()
+            buffer.add(event)
+            items.signal()
+        mutex.signal()
+    }
+}
+
+consumer() {
+   while(1) {
+        items.wait()
+        mutex.wait()
+            event = buffer.get()
+        mutex.signal()
+        event.process()
+   }
+}
+
+// improvement -> 
+producer() {
+    while(1){
+        event = waitForEvent()
+        mutex.wait()
+            buffer.add(event)
+        mutex.signal()
+        items.signal()
+    }
+}
+
+// an error: 
+
+consumer() {
+   while(1) {
+        mutex.wait()
+            items.wait()
+            event = buffer.get()
+        mutex.signal()
+        event.process()
+   }
+}

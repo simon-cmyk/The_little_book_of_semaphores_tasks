@@ -1,0 +1,31 @@
+// read/write 
+// Categorical mutual exclusion
+int8 readers = 0;
+mutex = Semaphore(1);
+emptyRoom = Semaphore(1)
+
+readers() {
+    mutex.wait()
+    readers += 1
+    if(readers == 1) {
+        emptyRoom.wait()
+    }
+    mutex.signal()
+
+    // critical section
+
+    mutex.wait()
+    readers -= 1
+    if(readers == 0) {
+        emptyRoom.signal()
+    }
+    mutex.signal()
+}
+
+writers() {
+    emptyRoom.wait()
+    write()
+    emptyRoom.signal()
+}
+
+// lightswitch solution basically. 
