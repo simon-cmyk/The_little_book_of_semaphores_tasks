@@ -1,0 +1,2 @@
+# The_little_book_of_semaphores_tasks
+Just some synchronization tasks
