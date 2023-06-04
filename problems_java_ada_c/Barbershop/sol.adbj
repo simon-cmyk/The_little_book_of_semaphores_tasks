@@ -1,0 +1,23 @@
+Protected type Barbershop is
+    private:
+        entry serve;
+        entry customer;
+
+        customerDone: Boolean := False;
+        customerCount: Integer := 0;
+        busy: Boolean := False;
+
+end BarberShop;
+
+Protected body BarberShop is
+    entry serve when customerCount > 0 is
+        busy = False;
+        serveHaircut();
+        
+
+    end serve; 
+
+-- Would ideally make use of more procedures and have more
+private variables
+
+// Not a done example yet.
