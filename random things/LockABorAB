@@ -1,0 +1,25 @@
+// Sverre solution
+allocate(resourcelist){
+    wait(LockManager)
+    if(lm_resourceAreFree(reasourcelist)){
+        lm_allocateResource(resourcelist)
+        signal(LockManager)
+        return
+    } else {
+        qn = allocateQueueNumber();
+        store_request(qn, resourcelist)
+        signal(LockManager)
+        wait(resourcelist)
+        wait(semQ[qn]);
+    }
+}
+
+free(rlist){
+    wait(LockManager)
+    lm_unreserve(rList);
+    while(Any requests in queue){
+        set qn & rl for fullfillable requests
+        lm_reserve(rlisr)
+        signal(semQ[qn])
+    }
+}
