@@ -1,0 +1,9 @@
+Thread A
+1 statement a1
+2 sem . signal ()
+
+Thread B
+1 sem . wait ()
+2 statement b1
+
+// For use in serialization...

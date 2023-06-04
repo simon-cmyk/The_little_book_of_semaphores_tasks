@@ -1,0 +1,9 @@
+Semaphores ONEMORE(N)
+
+tn() {
+    ONEMORE.wait();
+    // Entered critical section
+
+    ONEMORE.signal();
+
+}

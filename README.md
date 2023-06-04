@@ -8,3 +8,5 @@ Mostly the solutions are pseudocode, c/Posix, ada and java (or a try on them)
 Can be connected to the Exam in TTK4145 Real-time Programming at NTNU. :bowtie:  
 
 [BookLink](https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf)
+
+I don't own the code. Nor have i written the majority of it. Mostly it is from the book.

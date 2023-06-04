@@ -1,0 +1,65 @@
+#define AMOUNT_OF_PARTICIPANTS 10
+mut_count = Semaphore(1)
+barrier = Semaphore(0)
+int8 atBarrierCount = 0;
+
+tn() {
+    doN();
+    countLock.wait();
+    atBarrierCount = atBarrierCount + 1;
+    if(atBarrierCount == AMOUNT_OF_PARTICIPANTS) {
+        atBarrierCount = 0;
+        for(int8 i = 1; i < AMOUNT_OF_PARTICIPANTS; i++) {
+            barrier.signal();
+        }
+        countLock.signal();
+    } else {
+        countLock.signal();
+        barrier.wait();
+    }
+}
+
+// book solution
+rendezvous
+
+mutex . wait ()
+count = count + 1
+mutex . signal ()
+
+if count == n : barrier . signal ()
+
+// Turnstile
+barrier . wait ()
+barrier . signal ()
+
+critical point
+
+// After nth thread turnstile is still open. Should also not read
+// count as it is not protected by mutex
+
+// NOn working: 
+rendezvous
+2
+3 mutex . wait ()
+4 count = count + 1
+5 mutex . signal ()
+6
+7 if count == n : barrier . signal ()
+8
+9 barrier . wait ()
+10
+11 critical point
+
+// another bad one:
+
+rendezvous
+2
+3 mutex . wait ()
+4 count = count + 1
+5 if count == n : barrier . signal ()
+6
+7 barrier . wait ()
+8 barrier . signal ()
+9 mutex . signal ()
+10
+11 critical point

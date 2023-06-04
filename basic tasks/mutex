@@ -1,0 +1,13 @@
+Semaphores mutex(1);
+int8 count = 0
+ta() {
+    mutex.wait();
+    count = count + 1
+    mutex.signal();
+}
+
+tb() {
+    mutex.wait();
+    count = count - 1
+    mutex.signal();
+}

@@ -1,0 +1,17 @@
+Semaphores aDone(0), bDone(0)
+
+t1() {
+    doA();
+    aDone.signal();
+    bDone.wait();
+
+}
+
+t2() {
+    doB();
+    bDone.signal();
+    aDone.wait();
+
+}
+
+// Rendezvous: Two threads executing fragments of code, and synchronizing at a point before continuing.
